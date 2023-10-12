@@ -58,12 +58,20 @@ namespace Rota_Thomas___6___Esercitazione_Tablet
             get { return _durataBatteria; }
             set { _durataBatteria = value; }
         }
+        public int[] Punteggio(Tablet[] t)
+        {
+            int[] p = new int[t.Length];
+            for (int i = 0; i < t.Length; i++)
+            {
 
+            }
+            return p;
+        }
         public string StampaDati(Tablet[] t)
         {
             string vis = string.Empty;
             for (int i = 0; i < t.Length; i++)
-                vis += $"{t[i].Marca}; {t[i].Velocita} GHz; {t[i].Dimensione} pollici; {t[i].DurataBatteria} mAh\n";
+                vis += $"{t[i].Marca}; {t[i].Velocita} GHz; {t[i].Dimensione} pollici; {t[i].DurataBatteria} mAh; Punteggio\n";
             return vis;
         }
 
