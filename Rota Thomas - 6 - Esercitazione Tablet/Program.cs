@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,7 +29,7 @@ namespace Rota_Thomas___6___Esercitazione_Tablet
             _marca = string.Empty;
             _velocita = 0;
             _dimensione = 0;
-            _durataBatteria= 0;
+            _durataBatteria = 0;
         }
         public Tablet(string m, double vel, int dim, int batteryCapacity)
         {
@@ -39,25 +40,61 @@ namespace Rota_Thomas___6___Esercitazione_Tablet
         }
         public string Marca
         {
-            get { return _marca;  } set { _marca = value; }
+            get { return _marca; }
+            set { _marca = value; }
         }
         public double Velocita
         {
-            get { return _velocita; } set { _velocita = value; }
+            get { return _velocita; }
+            set { _velocita = value; }
         }
         public int Dimensione
         {
-            get { return _dimensione; } set { _dimensione = value; }
+            get { return _dimensione; }
+            set { _dimensione = value; }
         }
         public int DurataBatteria
         {
             get { return _durataBatteria; }
             set { _durataBatteria = value; }
+        }
+
+        public string StampaDati(Tablet[] t)
+        {
+            string vis = string.Empty;
+            for (int i = 0; i < t.Length; i++)
+                vis += $"{t[i].Marca}; {t[i].Velocita} GHz; {t[i].Dimensione} pollici; {t[i].DurataBatteria} mAh\n";
+            return vis;
+        }
+
     }
     internal class Program
     {
         static void Main(string[] args)
         {
+            int dim = 5;
+            Tablet[] t = new Tablet[dim];
+            for (int i = 0; i < dim; i++)
+            {
+                Console.Write($"Inserire la marca del {i+1} tablet: ");
+                string brand = Console.ReadLine();
+
+                Console.Write($"Inserire cognome la velocità del {i+1} tablet in GHz: ");
+                double spd = double.Parse(Console.ReadLine());
+
+                Console.Write($"Inserire la dimensione del {i+1} tablet in pollici: ");
+                int dms = int.Parse(Console.ReadLine());
+
+                Console.Write($"Inserire la durata della batteria del {i+1} tablet in mAh: ");
+                int battery = int.Parse(Console.ReadLine());
+
+                t[i] = new Tablet(brand, spd, dms, battery);
+                Console.Clear();
+            }
+            Console.Clear();
+
+            Console.WriteLine("Tablets:");
+            Console.WriteLine(t[0].StampaDati(t));
         }
     }
 }
