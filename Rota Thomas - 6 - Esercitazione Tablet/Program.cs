@@ -21,7 +21,7 @@ namespace Rota_Thomas___6___Esercitazione_Tablet
     {
         private string _marca;
         private double _velocita;
-        private int _dimensione;
+        private double _dimensione;
         private int _durataBatteria;
 
         public Tablet()
@@ -31,7 +31,7 @@ namespace Rota_Thomas___6___Esercitazione_Tablet
             _dimensione = 0;
             _durataBatteria = 0;
         }
-        public Tablet(string m, double vel, int dim, int batteryCapacity)
+        public Tablet(string m, double vel, double dim, int batteryCapacity)
         {
             _marca = m;
             _velocita = vel;
@@ -48,7 +48,7 @@ namespace Rota_Thomas___6___Esercitazione_Tablet
             get { return _velocita; }
             set { _velocita = value; }
         }
-        public int Dimensione
+        public double Dimensione
         {
             get { return _dimensione; }
             set { _dimensione = value; }
@@ -61,20 +61,30 @@ namespace Rota_Thomas___6___Esercitazione_Tablet
         public int[] Punteggio(Tablet[] t)
         {
             int[] p = new int[t.Length];
-            for (int i = 0; i < t.Length; i++)
+            for (int i = 0; i < p.Length; i++)
             {
-
+	            int pV = (int)(Math.Round((decimal)(t[i].Velocita), MidpointRounding.AwayFromZero)) * 10;
+                int pD = (int)(Math.Round((decimal)(t[i].Dimensione), MidpointRounding.AwayFromZero));
+                int pB = t[i].DurataBatteria / 1000;
+                p[i] = pV + pD + pB;
             }
-            return p;
+			return p;
         }
         public string StampaDati(Tablet[] t)
         {
+            int[] pts = Punteggio(t);
             string vis = string.Empty;
-            for (int i = 0; i < t.Length; i++)
-                vis += $"{t[i].Marca}; {t[i].Velocita} GHz; {t[i].Dimensione} pollici; {t[i].DurataBatteria} mAh; Punteggio\n";
-            return vis;
-        }
+            int maxPunteggio = pts.Max();
+            int minPunteggio = pts.Min();
+            int indexMax = Array.IndexOf(pts, maxPunteggio);
+            int indexMin = Array.IndexOf(pts, minPunteggio);
+			for (int i = 0; i < t.Length; i++)
+                vis += $"{t[i].Marca}; {t[i].Velocita} GHz; {t[i].Dimensione} pollici; {t[i].DurataBatteria} mAh; Punteggio: {pts[i]}\n";
 
+			vis += $"\nPunteggio Massimo: {maxPunteggio}\n{t[indexMax].Marca}; {t[indexMax].Velocita} GHz; {t[indexMax].Dimensione} pollici; {t[indexMax].DurataBatteria} mAh\n";
+            vis += $"\nPunteggio Minimo: {minPunteggio}\n{t[indexMin].Marca}; {t[indexMin].Velocita} GHz; {t[indexMin].Dimensione} pollici; {t[indexMin].DurataBatteria} mAh\n";
+			return vis;
+        }
     }
     internal class Program
     {
@@ -87,11 +97,11 @@ namespace Rota_Thomas___6___Esercitazione_Tablet
                 Console.Write($"Inserire la marca del {i+1} tablet: ");
                 string brand = Console.ReadLine();
 
-                Console.Write($"Inserire cognome la velocità del {i+1} tablet in GHz: ");
+                Console.Write($"Inserire la velocità del {i+1} tablet in GHz: ");
                 double spd = double.Parse(Console.ReadLine());
 
                 Console.Write($"Inserire la dimensione del {i+1} tablet in pollici: ");
-                int dms = int.Parse(Console.ReadLine());
+                double dms = double.Parse(Console.ReadLine());
 
                 Console.Write($"Inserire la durata della batteria del {i+1} tablet in mAh: ");
                 int battery = int.Parse(Console.ReadLine());
